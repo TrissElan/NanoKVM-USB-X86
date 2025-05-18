@@ -1,6 +1,6 @@
 # NanoKVM-USB ARM64
 
-This is a Windows ARM64 fork of the [NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB) desktop application by Sipeed.
+A Windows ARM64 fork of the [NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB) desktop application by Sipeed.
 
 ## Features
 
@@ -13,7 +13,7 @@ This is a Windows ARM64 fork of the [NanoKVM-USB](https://github.com/sipeed/Nano
 ## Limitations
 
 - This fork only supports Windows ARM64 platform
-- Only video and Audio functionality is available (no serialport, keyboard, or mouse capture)
+- Only video and audio functionality is available (no serialport, keyboard, or mouse capture)
 
 ## How to Build
 
@@ -33,3 +33,9 @@ npm run build:win
 ## License
 
 This project is licensed under the same license as the original Sipeed NanoKVM-USB project.
+
+## Support
+
+If you find this project useful, please consider supporting it.
+
+[![donate](https://example.com/buy-me-a-coffee.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WFXTNDJ3LYB2U)
