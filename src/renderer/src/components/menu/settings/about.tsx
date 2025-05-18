@@ -1,7 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
-import { GithubOutlined, XOutlined } from '@ant-design/icons'
+import { GithubOutlined } from '@ant-design/icons'
 import { Divider } from 'antd'
-import { BookOpenIcon, MessageSquareIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { IpcEvents } from '@common/ipc-events'
