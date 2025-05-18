@@ -6,9 +6,6 @@ import { MenuIcon, XIcon } from 'lucide-react'
 import * as storage from '@renderer/libs/storage'
 
 import { Fullscreen } from './fullscreen'
-import { Keyboard } from './keyboard'
-import { Mouse } from './mouse'
-import { SerialPort } from './serial-port'
 import { Settings } from './settings'
 import { Video } from './video'
 
@@ -34,11 +31,6 @@ export const Menu = (): ReactElement => {
           )}
         >
           <Video />
-          <SerialPort />
-          <Divider type="vertical" className="px-[2px]" />
-
-          <Mouse />
-          <Keyboard />
           <Divider type="vertical" className="px-[2px]" />
 
           <Fullscreen />

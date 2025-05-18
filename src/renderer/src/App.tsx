@@ -1,19 +1,13 @@
 import { ReactElement, useEffect, useState } from 'react'
 import { Result, Spin } from 'antd'
-import clsx from 'clsx'
+// import clsx from 'clsx'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
-import { useMediaQuery } from 'react-responsive'
 
 import { IpcEvents } from '@common/ipc-events'
 import { DeviceModal } from '@renderer/components/device-modal'
-import { Keyboard } from '@renderer/components/keyboard'
 import { Menu } from '@renderer/components/menu'
-import { Mouse } from '@renderer/components/mouse'
-import { VirtualKeyboard } from '@renderer/components/virtual-keyboard'
-import { resolutionAtom, serialPortStateAtom, videoStateAtom } from '@renderer/jotai/device'
-import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard'
-import { mouseStyleAtom } from '@renderer/jotai/mouse'
+import { resolutionAtom, videoStateAtom } from '@renderer/jotai/device'
 import { camera } from '@renderer/libs/camera'
 import { getVideoResolution } from '@renderer/libs/storage'
 import type { Resolution } from '@renderer/types'
@@ -22,12 +16,8 @@ type State = 'loading' | 'success' | 'failed'
 
 const App = (): ReactElement => {
   const { t } = useTranslation()
-  const isBigScreen = useMediaQuery({ minWidth: 850 })
 
   const videoState = useAtomValue(videoStateAtom)
-  const serialPortState = useAtomValue(serialPortStateAtom)
-  const mouseStyle = useAtomValue(mouseStyleAtom)
-  const isKeyboardEnable = useAtomValue(isKeyboardEnableAtom)
   const setResolution = useSetAtom(resolutionAtom)
 
   const [state, setState] = useState<State>('loading')
@@ -43,13 +33,13 @@ const App = (): ReactElement => {
 
     return (): void => {
       camera.close()
-      window.electron.ipcRenderer.invoke(IpcEvents.CLOSE_SERIAL_PORT)
     }
   }, [])
 
   useEffect(() => {
-    setIsConnected(videoState === 'connected' && serialPortState === 'connected')
-  }, [videoState, serialPortState])
+    // Only video is supported in Windows ARM64 build
+    setIsConnected(videoState === 'connected')
+  }, [videoState])
 
   async function requestMediaPermissions(resolution?: Resolution): Promise<void> {
     try {
@@ -66,7 +56,11 @@ const App = (): ReactElement => {
             width: { ideal: resolution?.width || 1920 },
             height: { ideal: resolution?.height || 1080 }
           },
-          audio: true
+          audio: {
+            echoCancellation: false,
+            autoGainControl: false,
+            noiseSuppression: false
+          }
         })
         stream.getTracks().forEach((track) => track.stop())
       }
@@ -105,8 +99,6 @@ const App = (): ReactElement => {
       {isConnected ? (
         <>
           <Menu />
-          <Mouse />
-          {isKeyboardEnable && <Keyboard />}
         </>
       ) : (
         <DeviceModal />
@@ -114,13 +106,11 @@ const App = (): ReactElement => {
 
       <video
         id="video"
-        className={clsx('block min-h-[480px] min-w-[640px] select-none', mouseStyle)}
+        className="block min-h-[480px] min-w-[640px] select-none"
         style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'scale-down' }}
         autoPlay
         playsInline
       />
-
-      <VirtualKeyboard isBigScreen={isBigScreen} />
     </>
   )
 }

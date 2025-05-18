@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { BadgeInfoIcon, CircleArrowUpIcon, PaletteIcon, SettingsIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { IpcEvents } from '@common/ipc-events'
+// import { IpcEvents } from '@common/ipc-events'
 import * as storage from '@renderer/libs/storage'
 
 import { About } from './about'
@@ -18,15 +18,9 @@ export const Settings = (): ReactElement => {
   const [currentTab, setCurrentTab] = useState('appearance')
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false)
 
+  // Update checking is removed in Windows ARM64 build
   useEffect(() => {
-    const skip = storage.getSkipUpdate()
-    if (skip) return
-
-    window.electron.ipcRenderer.invoke(IpcEvents.CHECK_FOR_UPDATES).then((info) => {
-      if (info?.version) {
-        setIsUpdateAvailable(true)
-      }
-    })
+    setIsUpdateAvailable(false)
   }, [])
 
   const tabs = [

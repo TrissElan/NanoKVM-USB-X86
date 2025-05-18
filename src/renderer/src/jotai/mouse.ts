@@ -1,13 +1,10 @@
-// mouse cursor style
+// This file is kept for compatibility but all functionality has been removed
+// for Windows ARM64 build
+
 import { atom } from 'jotai'
 
+// These atoms are kept for compatibility but are not used in Windows ARM64 build
 export const mouseStyleAtom = atom('cursor-default')
-
-// mouse mode: absolute or relative
 export const mouseModeAtom = atom('absolute')
-
-// mouse scroll direction: 1 or -1
 export const scrollDirectionAtom = atom(1)
-
-// mouse scroll interval (unit: ms)
-export const scrollIntervalAtom = atom(0);
+export const scrollIntervalAtom = atom(0)

@@ -1,10 +1,10 @@
 {
-  "name": "nanokvm-usb",
-  "version": "1.0.1",
-  "description": "NanoKVM-USB Desktop",
+  "name": "nanokvm-usb-arm64",
+  "version": "1.0.0",
+  "description": "NanoKVM-USB ARM64 Desktop",
   "main": "./out/main/index.js",
-  "author": "sipeed.com",
-  "homepage": "https://github.com/sipeed/NanoKVM-USB",
+  "author": "sipeed.com (ARM64 fork by TrissElan)",
+  "homepage": "https://github.com/TrissElan/NanoKVM-USB-ARM64",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
@@ -15,9 +15,7 @@
     "dev": "electron-vite dev",
     "build": "npm run typecheck && electron-vite build",
     "build:unpack": "npm run build && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win",
-    "build:mac": "electron-vite build && electron-builder --mac",
-    "build:linux": "electron-vite build && electron-builder --linux"
+    "build:win": "npm run build && electron-builder --win --arm64"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
@@ -27,14 +25,12 @@
     "antd": "^5.24.1",
     "clsx": "^2.1.1",
     "electron-log": "^5.3.1",
-    "electron-updater": "^6.3.9",
     "i18next": "^24.2.2",
     "jotai": "^2.12.1",
     "lucide-react": "^0.476.0",
     "react-i18next": "^15.4.1",
     "react-responsive": "^10.0.0",
     "react-simple-keyboard": "^3.8.49",
-    "serialport": "^13.0.0",
     "tailwindcss": "^4.0.6",
     "vaul": "^1.1.2"
   },

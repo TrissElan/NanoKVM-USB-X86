@@ -14,7 +14,12 @@ class Camera {
 
     const constraints = {
       video: { deviceId: { exact: id }, width: { ideal: width }, height: { ideal: height } },
-      audio: audioId ? { deviceId: { exact: audioId } } : false
+      audio: audioId ? {
+        deviceId: { exact: audioId },
+        echoCancellation: false,
+        autoGainControl: false,
+        noiseSuppression: false
+      } : false
     }
 
     this.id = id

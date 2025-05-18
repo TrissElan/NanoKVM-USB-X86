@@ -1,3 +1,10 @@
+# Original work Copyright (C) 2023-2024 Sipeed
+# Modified work Copyright (C) 2025 TrissElan (Windows ARM64 fork)
+# This file is part of NanoKVM-USB ARM64.
+#
+# NanoKVM-USB ARM64 is a Windows ARM64 fork of NanoKVM-USB by Sipeed.
+# The original project can be found at: https://github.com/sipeed/NanoKVM-USB
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

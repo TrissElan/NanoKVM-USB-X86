@@ -3,7 +3,6 @@ import { atom } from 'jotai'
 import { Resolution } from '@renderer/types'
 
 type VideoState = 'disconnected' | 'connecting' | 'connected'
-type SerialState = 'notSupported' | 'disconnected' | 'connecting' | 'connected'
 
 export const resolutionAtom = atom<Resolution>({
   width: 1920,
@@ -13,5 +12,6 @@ export const resolutionAtom = atom<Resolution>({
 export const videoDeviceIdAtom = atom('')
 export const videoStateAtom = atom<VideoState>('disconnected')
 
+// These atoms are kept for compatibility but are not used in Windows ARM64 build
 export const serialPortAtom = atom('')
-export const serialPortStateAtom = atom<SerialState>('disconnected')
+export const serialPortStateAtom = atom('notSupported')
