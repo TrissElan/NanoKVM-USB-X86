@@ -1,10 +1,9 @@
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+node_modules
+dist
+out
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.eslintcache
+*.log*
+
+.idea
+.vscode
