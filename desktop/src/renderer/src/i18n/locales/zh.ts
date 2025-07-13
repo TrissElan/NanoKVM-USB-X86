@@ -20,7 +20,6 @@ const zh = {
       resolution: '分辨率',
       customResolution: '自定义',
       device: '设备',
-      fps: 'FPS',
       custom: {
         title: '自定义分辨率',
         width: '宽度',

@@ -21,7 +21,6 @@ const en = {
       resolution: 'Resolution',
       customResolution: 'Custom',
       device: 'Device',
-      fps: 'FPS',
       custom: {
         title: 'Custom Resolution',
         width: 'Width',

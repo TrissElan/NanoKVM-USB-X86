@@ -1,16 +1,22 @@
 import { ReactElement, useEffect, useRef } from 'react'
+import { message } from 'antd'
 import { useAtomValue } from 'jotai'
+import { useTranslation } from 'react-i18next'
 
 import { IpcEvents } from '@common/ipc-events'
 import { resolutionAtom } from '@renderer/jotai/device'
 import { scrollDirectionAtom, scrollIntervalAtom } from '@renderer/jotai/mouse'
 import type { Mouse as MouseKey } from '@renderer/types'
 
-export const Absolute = (): ReactElement => {
+export const Relative = (): ReactElement => {
+  const { t } = useTranslation()
+  const [messageApi, contextHolder] = message.useMessage()
+
   const resolution = useAtomValue(resolutionAtom)
   const scrollDirection = useAtomValue(scrollDirectionAtom)
   const scrollInterval = useAtomValue(scrollIntervalAtom)
 
+  const isLockedRef = useRef(false)
   const keyRef = useRef<MouseKey>({
     left: false,
     right: false,
@@ -19,17 +25,41 @@ export const Absolute = (): ReactElement => {
   const lastScrollTimeRef = useRef(0)
 
   useEffect(() => {
+    messageApi.open({
+      key: 'relative',
+      type: 'info',
+      content: t('mouse.requestPointer'),
+      duration: 3,
+      style: {
+        marginTop: '40vh'
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     const canvas = document.getElementById('video')
     if (!canvas) return
 
+    document.addEventListener('pointerlockchange', handlePointerLockChange)
+    canvas.addEventListener('click', handleClick)
     canvas.addEventListener('mousedown', handleMouseDown)
     canvas.addEventListener('mouseup', handleMouseUp)
     canvas.addEventListener('mousemove', handleMouseMove)
     canvas.addEventListener('wheel', handleWheel)
-    canvas.addEventListener('click', disableEvent)
     canvas.addEventListener('contextmenu', disableEvent)
 
-    // press button
+    function handlePointerLockChange(): void {
+      isLockedRef.current = document.pointerLockElement === canvas
+    }
+
+    function handleClick(event: MouseEvent): void {
+      disableEvent(event)
+
+      if (!isLockedRef.current) {
+        canvas!.requestPointerLock()
+      }
+    }
+
     async function handleMouseDown(event: MouseEvent): Promise<void> {
       disableEvent(event)
 
@@ -44,13 +74,13 @@ export const Absolute = (): ReactElement => {
           keyRef.current.right = true
           break
         default:
+          console.log(`unknown button ${event.button}`)
           return
       }
 
-      await send(event)
+      await send(0, 0, 0)
     }
 
-    // release button
     async function handleMouseUp(event: MouseEvent): Promise<void> {
       disableEvent(event)
 
@@ -65,19 +95,23 @@ export const Absolute = (): ReactElement => {
           keyRef.current.right = false
           break
         default:
+          console.log(`unknown button ${event.button}`)
           return
       }
 
-      await send(event)
+      await send(0, 0, 0)
     }
 
-    // mouse move
     async function handleMouseMove(event: MouseEvent): Promise<void> {
       disableEvent(event)
-      await send(event)
+
+      const x = event.movementX || 0
+      const y = event.movementY || 0
+      if (x === 0 && y === 0) return
+
+      await send(Math.abs(x) < 10 ? x * 2 : x, Math.abs(y) < 10 ? y * 2 : y, 0)
     }
 
-    // mouse scroll
     async function handleWheel(event: WheelEvent): Promise<void> {
       disableEvent(event)
 
@@ -89,38 +123,27 @@ export const Absolute = (): ReactElement => {
       const delta = Math.floor(event.deltaY)
       if (delta === 0) return
 
-      await send(event, delta > 0 ? -1 * scrollDirection : scrollDirection)
+      await send(0, 0, delta > 0 ? -1 * scrollDirection : scrollDirection)
 
       lastScrollTimeRef.current = currentTime
     }
 
-    async function send(event: MouseEvent, scroll: number = 0): Promise<void> {
+    async function send(x: number, y: number, scroll: number): Promise<void> {
       const key =
         (keyRef.current.left ? 1 : 0) |
         (keyRef.current.right ? 2 : 0) |
         (keyRef.current.mid ? 4 : 0)
 
-      const rect = canvas!.getBoundingClientRect()
-      const x = Math.abs(event.clientX - rect.left)
-      const y = Math.abs(event.clientY - rect.top)
-
-      await window.electron.ipcRenderer.invoke(
-        IpcEvents.SEND_MOUSE_ABSOLUTE,
-        key,
-        rect.width,
-        rect.height,
-        x,
-        y,
-        scroll
-      )
+      await window.electron.ipcRenderer.invoke(IpcEvents.SEND_MOUSE_RELATIVE, key, x, y, scroll)
     }
 
     return (): void => {
+      document.removeEventListener('pointerlockchange', handlePointerLockChange)
+      canvas.removeEventListener('click', handleClick)
       canvas.removeEventListener('mousemove', handleMouseMove)
       canvas.removeEventListener('mousedown', handleMouseDown)
       canvas.removeEventListener('mouseup', handleMouseUp)
       canvas.removeEventListener('wheel', handleWheel)
-      canvas.removeEventListener('click', disableEvent)
       canvas.removeEventListener('contextmenu', disableEvent)
     }
   }, [resolution, scrollDirection, scrollInterval])
@@ -130,5 +153,5 @@ export const Absolute = (): ReactElement => {
     event.stopPropagation()
   }
 
-  return <></>
+  return <>{contextHolder}</>
 }

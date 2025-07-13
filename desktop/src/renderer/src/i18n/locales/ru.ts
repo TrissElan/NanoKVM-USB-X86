@@ -20,8 +20,7 @@ const ru = {
     video: {
       resolution: 'Разрешение',
       customResolution: 'Пользовательское',
-      device: 'Устройство',
-      fps: 'FPS',
+      device: 'Видеоустройство',
       custom: {
         title: 'Пользовательское разрешение',
         width: 'Ширина',

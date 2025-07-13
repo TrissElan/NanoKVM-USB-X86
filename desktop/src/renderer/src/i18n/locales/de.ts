@@ -17,19 +17,18 @@ const de = {
         keyboard: 'Tastatur',
         mouse: 'Maus'
       },
-    video: {
-      resolution: 'Auflösung',
-      customResolution: 'Benutzerdefiniert',
-      device: 'Gerät',
-      fps: 'FPS',
-      custom: {
-        title: 'Benutzerdefinierte Auflösung',
-        width: 'Breite',
-        height: 'Höhe',
-        confirm: 'Ok',
-        cancel: 'Abbrechen'
-      }
-    },
+      video: {
+        resolution: 'Auflösung',
+        customResolution: 'Benutzerdefiniert',
+        device: 'Gerät',
+        custom: {
+          title: 'Benutzerdefinierte Aufösung',
+          width: 'Breite',
+          height: 'Höhe',
+          confirm: 'Ok',
+          cancel: 'Abbrechen'
+        }
+      },
       keyboard: {
         paste: 'Einfügen',
         virtualKeyboard: 'Virtuelle Tastatur',

@@ -10,7 +10,7 @@ A Windows 32-bit fork of the [NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB
 - ✅ **Enhanced video/audio processing** with configurable settings
 - ✅ **FPS selection** (15/30/45/60 FPS) in video menu with GaugeIcon
 - ✅ **Audio optimization** (disabled echo cancellation, auto gain control, noise suppression)
-- ✅ **Dual monitor support** with fixed mouse coordinate issues
+- ⚠️ **Single monitor optimized** (dual monitor has coordinate limitations)
 - ✅ **Update functionality removed** for lightweight operation
 - ✅ **Serial port support** for keyboard/mouse capture (full KVM functionality)
 - ✅ **Seamless FPS switching** without video disconnection
@@ -22,7 +22,7 @@ Unlike the ARM64 fork which had serialport compatibility issues, this Win32 vers
 
 - ✅ **Full KVM functionality** - Video, Keyboard, and Mouse capture all working
 - ✅ **Stable serialport support** - No compatibility issues with Windows 32-bit
-- ✅ **Enhanced user experience** - Smooth FPS changes, dual monitor support
+- ✅ **Enhanced user experience** - Smooth FPS changes, single monitor optimized
 - ✅ **Production ready** - Clean code without debug logs
 
 ## Development
@@ -62,9 +62,10 @@ The application now includes enhanced video processing options:
 
 ## Mouse Support
 
-- **Absolute Mode**: Fixed dual monitor coordinate issues
+- **Absolute Mode**: Optimized for single monitor use (dual monitor has coordinate limitations)
 - **Relative Mode**: Improved sensitivity and stability
 - **Seamless switching**: Between absolute and relative modes
+- **Recommendation**: Use relative mode for dual monitor setups
 
 ## Repository
 

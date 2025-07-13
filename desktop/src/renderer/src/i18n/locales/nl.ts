@@ -17,19 +17,18 @@ const nl = {
         keyboard: 'Toetsenbord',
         mouse: 'Muis'
       },
-    video: {
-      resolution: 'Resolutie',
-      customResolution: 'Aangepast',
-      device: 'Apparaat',
-      fps: 'FPS',
-      custom: {
-        title: 'Aangepaste resolutie',
-        width: 'Breedte',
-        height: 'Hoogte',
-        confirm: 'Ok',
-        cancel: 'Annuleren'
-      }
-    },
+      video: {
+        resolution: 'Resolutie',
+        customResolution: 'Aangepast',
+        device: 'Apparaat',
+        custom: {
+          title: 'Aangepaste resolutie',
+          width: 'Breedte',
+          height: 'Hoogte',
+          confirm: 'OK',
+          cancel: 'Annuleren'
+        }
+      },
       keyboard: {
         paste: 'Plakken',
         virtualKeyboard: 'Virtueel toetsenbord',

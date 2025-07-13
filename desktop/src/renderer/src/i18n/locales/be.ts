@@ -17,19 +17,18 @@ const be = {
         keyboard: 'Klavier',
         mouse: 'Muis'
       },
-    video: {
-      resolution: 'Разрешэнне',
-      customResolution: 'Карыстальніцкае',
-      device: 'Прылада',
-      fps: 'FPS',
-      custom: {
-        title: 'Карыстальніцкае разрешэнне',
-        width: 'Шырыня',
-        height: 'Вышыня',
-        confirm: 'Ок',
-        cancel: 'Адмена'
-      }
-    },
+      video: {
+        resolution: 'Resolutie',
+        customResolution: 'Aangepast',
+        device: 'Toestel',
+        custom: {
+          title: 'Aangepaste resolutie',
+          width: 'Breedte',
+          height: 'Hoogte',
+          confirm: 'OK',
+          cancel: 'Annuleren'
+        }
+      },
       keyboard: {
         paste: 'Plakken',
         virtualKeyboard: 'Virtueel klavier',

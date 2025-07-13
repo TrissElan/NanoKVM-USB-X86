@@ -44,6 +44,7 @@ export const Absolute = (): ReactElement => {
           keyRef.current.right = true
           break
         default:
+          console.log(`unknown button ${event.button}`)
           return
       }
 
@@ -65,6 +66,7 @@ export const Absolute = (): ReactElement => {
           keyRef.current.right = false
           break
         default:
+          console.log(`unknown button ${event.button}`)
           return
       }
 
