@@ -1,5 +1,5 @@
-appId: com.sipeed.usbkvm.arm64
-productName: NanoKVM-USB ARM64
+appId: com.sipeed.usbkvm.win32
+productName: NanoKVM-USB Win32
 
 directories:
   buildResources: build
@@ -16,54 +16,24 @@ asarUnpack:
   - resources/**
 
 win:
-  executableName: NanoKVM-USB-ARM64
   target:
     - target: nsis
       arch:
-        - arm64
+        - ia32
+  executableName: NanoKVM-USB-Win32
 
 nsis:
   oneClick: false                            # show installer wizard
   perMachine: true                           # install for all users
   allowToChangeInstallationDirectory: true
   allowElevation: true                       # request elevation when needed
-  artifactName: ${productName}-${version}-setup.${ext}
+  artifactName: ${productName}-${version}-win32-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: true
   createStartMenuShortcut: true
 
-mac:
-  entitlementsInherit: build/entitlements.mac.plist
-  extendInfo:
-    NSCameraUsageDescription: Application requests access to the device's camera.
-    NSMicrophoneUsageDescription: Application requests access to the device's microphone.
-    NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
-    NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
-  hardenedRuntime: true
-  gatekeeperAssess: false
-  notarize: false
-
-dmg:
-  artifactName: ${productName}-${version}.${ext}
-  sign: true
-
-linux:
-  target:
-    - AppImage
-    - snap
-    - deb
-  maintainer: sipeed.com (ARM64 fork by TrissElan)
-  category: Utility
-
-appImage:
-  artifactName: ${productName}-${version}.${ext}
-
 npmRebuild: false
-
-afterSign: "./notarize.js"
-
-# publish 설정 제거 (업데이트 기능 제거)
 
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/

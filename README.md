@@ -1,41 +1,54 @@
-# NanoKVM-USB ARM64
+# NanoKVM-USB Win32 Desktop
 
-A Windows ARM64 fork of the [NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB) desktop application by Sipeed.
+This is the NanoKVM-USB Win32 desktop version project.
+
+**Win32 fork by TrissElan** - Optimized for Windows 32-bit systems with enhanced video/audio processing and FPS control.
 
 ## Features
 
-- Windows ARM64 exclusive build
-- Removed serialport functionality (not compatible with ARM64)
-- Removed keyboard/mouse capture functionality
-- Removed auto-update functionality
-- Improved audio processing with disabled echo cancellation, auto gain control, and noise suppression
+- ✅ **Windows 32-bit optimized build**
+- ✅ **Enhanced video/audio processing** with configurable settings
+- ✅ **FPS selection** (15/30/45/60 FPS) in video menu
+- ✅ **Audio optimization** (disabled echo cancellation, auto gain control, noise suppression)
+- ✅ **Update functionality removed** for lightweight operation
+- ✅ **Serial port support** for keyboard/mouse capture
 
-## Limitations
+## Development
 
-- This fork only supports Windows ARM64 platform
-- Only video and audio functionality is available (no serialport, keyboard, or mouse capture)
+Windows build tool chain:
 
-## How to Build
-
-```bash
+```shell
 # Install dependencies
 npm install
 
-# Build for Windows ARM64
+# Start development server
+npm run dev
+```
+
+## Compile
+
+```shell
+# For Windows 32-bit (ia32)
 npm run build:win
 ```
 
-## Credits
+## Installation
 
-- Original project: [Sipeed NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB)
-- ARM64 fork by: TrissElan
+After building, you'll find the installer in the `dist` folder:
+- `NanoKVM-USB Win32-1.0.0-win32-setup.exe`
 
-## License
+## Video Settings
 
-This project is licensed under the same license as the original Sipeed NanoKVM-USB project.
+The application now includes enhanced video processing options:
 
-## Support
+- **FPS Control**: Select between 15, 30, 45, or 60 FPS in the video menu
+- **Audio Optimization**: Disabled processing for better performance
+  - Echo cancellation: OFF
+  - Auto gain control: OFF  
+  - Noise suppression: OFF
+- **High-quality audio**: 44.1kHz, 2-channel stereo
 
-If you find this project useful, please consider supporting it.
+## Repository
 
-[![donate](https://example.com/buy-me-a-coffee.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WFXTNDJ3LYB2U)
+- **Original**: [sipeed/NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB)
+- **Win32 Fork**: [TrissElan/NanoKVM-USB-Win32](https://github.com/TrissElan/NanoKVM-USB-Win32)

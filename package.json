@@ -1,10 +1,10 @@
 {
-  "name": "nanokvm-usb-arm64",
+  "name": "nanokvm-usb-win32",
   "version": "1.0.0",
-  "description": "NanoKVM-USB ARM64 Desktop",
+  "description": "NanoKVM-USB Win32 Desktop",
   "main": "./out/main/index.js",
-  "author": "sipeed.com (ARM64 fork by TrissElan)",
-  "homepage": "https://github.com/TrissElan/NanoKVM-USB-ARM64",
+  "author": "sipeed.com (Win32 fork by TrissElan)",
+  "homepage": "https://github.com/TrissElan/NanoKVM-USB-Win32",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
@@ -15,7 +15,9 @@
     "dev": "electron-vite dev",
     "build": "npm run typecheck && electron-vite build",
     "build:unpack": "npm run build && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win --arm64"
+    "build:win": "npm run build && electron-builder --win --ia32",
+    "build:mac": "electron-vite build && electron-builder --mac",
+    "build:linux": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
@@ -31,6 +33,7 @@
     "react-i18next": "^15.4.1",
     "react-responsive": "^10.0.0",
     "react-simple-keyboard": "^3.8.49",
+    "serialport": "^13.0.0",
     "tailwindcss": "^4.0.6",
     "vaul": "^1.1.2"
   },
@@ -44,7 +47,7 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
-    "electron": "^34.2.0",
+    "electron": "^37.2.0",
     "electron-builder": "^25.1.8",
     "electron-vite": "^3.0.0",
     "eslint": "^9.20.1",

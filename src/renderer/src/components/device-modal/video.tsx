@@ -85,7 +85,7 @@ export const Video = ({ setMsg }: VideoProps): ReactElement => {
 
   async function openCamera(videoId: string, audioId?: string): Promise<void> {
     try {
-      await camera.open(videoId, resolution.width, resolution.height, audioId)
+      await camera.open(videoId, resolution.width, resolution.height, 30, audioId)
 
       const video = document.getElementById('video') as HTMLVideoElement
       if (!video) return

@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react'
-import { GithubOutlined } from '@ant-design/icons'
+import { GithubOutlined, XOutlined } from '@ant-design/icons'
 import { Divider } from 'antd'
+import { BookOpenIcon, MessageSquareIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { IpcEvents } from '@common/ipc-events'
@@ -13,9 +14,24 @@ export const About = (): ReactElement => {
 
   const communities = [
     {
+      name: 'Document',
+      icon: <BookOpenIcon size={24} />,
+      url: 'https://wiki.sipeed.com/nanokvmusb'
+    },
+    {
       name: 'GitHub',
       icon: <GithubOutlined style={{ fontSize: '20px' }} width={24} height={24} />,
-      url: 'https://github.com/TrissElan/NanoKVM-USB-ARM64'
+      url: 'https://github.com/TrissElan/NanoKVM-USB-Win32'
+    },
+    {
+      name: 'X',
+      icon: <XOutlined style={{ fontSize: '20px' }} width={24} height={24} />,
+      url: 'https://twitter.com/SipeedIO'
+    },
+    {
+      name: 'Discussion',
+      icon: <MessageSquareIcon size={24} />,
+      url: 'https://maixhub.com/discussion/nanokvm'
     }
   ]
 
@@ -39,8 +55,7 @@ export const About = (): ReactElement => {
         <img src={icon} className="pointer-events-none h-[64px] w-[64px]" alt="maix" />
 
         <div className="flex flex-col space-y-1">
-          <span className="text-settings-active-foreground text-sm font-bold">NanoKVM-USB ARM64</span>
-          <span className="text-settings-foreground text-xs">Based on Sipeed NanoKVM-USB</span>
+          <span className="text-settings-active-foreground text-sm font-bold">NanoKVM-USB</span>
           <span className="text-settings-foreground text-sm">{version}</span>
         </div>
       </div>

@@ -60,7 +60,7 @@ export const Device = (): ReactElement => {
     setIsLoading(true)
 
     try {
-      await camera.open(device.videoId, resolution.width, resolution.height, device.audioId)
+      await camera.open(device.videoId, resolution.width, resolution.height, 30, device.audioId)
 
       const video = document.getElementById('video') as HTMLVideoElement
       if (!video) return

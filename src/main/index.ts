@@ -57,8 +57,11 @@ app.whenReady().then(() => {
   })
 
   events.registerApp()
+  events.registerSerialPort()
 
   createWindow()
+
+  events.registerUpdater(mainWindow)
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
