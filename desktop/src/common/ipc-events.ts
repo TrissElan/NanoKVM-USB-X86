@@ -12,13 +12,5 @@ export enum IpcEvents {
   CLOSE_SERIAL_PORT = 'close-serial-port',
   SERIAL_PORT_DISCONNECTED = 'serial-port-disconnected',
   SEND_KEYBOARD = 'send-keyboard',
-  SEND_MOUSE = 'send-mouse',
-
-  UPDATE_AVAILABLE = 'update-available',
-  UPDATE_NOT_AVAILABLE = 'update-not-available',
-  UPDATE_ERROR = 'update-error',
-  DOWNLOAD_PROGRESS = 'download-progress',
-  UPDATE_DOWNLOADED = 'update-downloaded',
-  CHECK_FOR_UPDATES = 'check-for-updates',
-  DOWNLOAD_UPDATE = 'download-update'
+  SEND_MOUSE = 'send-mouse'
 }

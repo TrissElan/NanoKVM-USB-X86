@@ -1,5 +1,5 @@
-import { ReactElement, useEffect, useState } from 'react'
-import { Badge, Modal } from 'antd'
+import { ReactElement, useState } from 'react'
+import { Modal } from 'antd'
 import clsx from 'clsx'
 import {
   BadgeInfoIcon,
@@ -9,9 +9,6 @@ import {
   SettingsIcon
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-
-import { IpcEvents } from '@common/ipc-events'
-import * as storage from '@renderer/libs/storage'
 
 import { About } from './about'
 import { Appearance } from './appearance'
@@ -23,18 +20,6 @@ export const Settings = (): ReactElement => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentTab, setCurrentTab] = useState('appearance')
-  const [isUpdateAvailable, setIsUpdateAvailable] = useState(false)
-
-  useEffect(() => {
-    const skip = storage.getSkipUpdate()
-    if (skip) return
-
-    window.electron.ipcRenderer.invoke(IpcEvents.CHECK_FOR_UPDATES).then((info) => {
-      if (info?.version) {
-        setIsUpdateAvailable(true)
-      }
-    })
-  }, [])
 
   const tabs = [
     { id: 'appearance', icon: <PaletteIcon size={16} />, component: <Appearance /> },
@@ -45,11 +30,6 @@ export const Settings = (): ReactElement => {
 
   function changeTab(tab: string): void {
     setCurrentTab(tab)
-
-    if (isUpdateAvailable && tab === 'update') {
-      setIsUpdateAvailable(false)
-      storage.setSkipUpdate(true)
-    }
   }
 
   function closeModal(): void {
@@ -90,17 +70,9 @@ export const Settings = (): ReactElement => {
               >
                 <div className="h-[16px] w-[16px]">{tab.icon}</div>
 
-                {isUpdateAvailable && tab.id === 'update' ? (
-                  <Badge dot color="blue" offset={[6, 3]}>
-                    <span className="hidden truncate text-sm sm:block">
-                      {t(`settings.${tab.id}.title`)}
-                    </span>
-                  </Badge>
-                ) : (
-                  <span className="hidden truncate text-sm sm:block">
-                    {t(`settings.${tab.id}.title`)}
-                  </span>
-                )}
+                <span className="hidden truncate text-sm sm:block">
+                  {t(`settings.${tab.id}.title`)}
+                </span>
               </div>
             ))}
           </div>
