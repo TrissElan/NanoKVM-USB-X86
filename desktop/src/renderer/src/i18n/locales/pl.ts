@@ -19,6 +19,7 @@ const pl = {
     },
     video: {
       resolution: 'Rozdzielczość',
+      fps: 'Liczba klatek',
       customResolution: 'Niestandardowa',
       device: 'Urządzenie',
       custom: {

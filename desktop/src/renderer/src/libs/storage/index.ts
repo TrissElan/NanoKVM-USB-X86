@@ -14,6 +14,7 @@ const MOUSE_MODE_KEY = 'nanokvm-usb-mouse-mode'
 const MOUSE_SCROLL_DIRECTION_KEY = 'nanokvm-usb-mouse-scroll-direction'
 const SKIP_UPDATE_KEY = 'nano-kvm-check-update'
 const MOUSE_SCROLL_INTERVAL_KEY = 'nanokvm-usb-mouse-scroll-interval'
+const VIDEO_FPS_KEY = 'nanokvm-usb-video-fps'
 const BAUD_RATE_KEY = 'nanokvm-usb-baud-rate'
 const MOUSE_JIGGLER_MODE_KEY = 'nanokvm-usb-mouse-jiggler-mode'
 const KEYBOARD_SHORTCUT_KEY = 'nanokvm-usb-keyboard-shortcuts'
@@ -77,6 +78,18 @@ export function getVideoScale(): number | null {
 
 export function setVideoScale(scale: number): void {
   localStorage.setItem(VIDEO_SCALE_KEY, String(scale))
+}
+
+export function getVideoFps(): number | null {
+  const fps = localStorage.getItem(VIDEO_FPS_KEY)
+  if (fps && Number(fps)) {
+    return Number(fps)
+  }
+  return null
+}
+
+export function setVideoFps(fps: number): void {
+  localStorage.setItem(VIDEO_FPS_KEY, String(fps))
 }
 
 export function getSerialPort(): string | null {
@@ -173,6 +186,7 @@ export function clearAllSettings(): void {
   localStorage.removeItem(MOUSE_SCROLL_DIRECTION_KEY)
   localStorage.removeItem(SKIP_UPDATE_KEY)
   localStorage.removeItem(MOUSE_SCROLL_INTERVAL_KEY)
+  localStorage.removeItem(VIDEO_FPS_KEY)
   localStorage.removeItem(BAUD_RATE_KEY)
 }
 

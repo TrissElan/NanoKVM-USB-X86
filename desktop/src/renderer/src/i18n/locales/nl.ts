@@ -26,6 +26,7 @@ const nl = {
     },
     video: {
       resolution: 'Resolutie',
+      fps: 'Framerate',
       scale: 'Schaal',
       customResolution: 'Aangepast',
       device: 'Apparaat',

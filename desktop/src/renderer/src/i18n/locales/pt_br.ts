@@ -19,6 +19,7 @@ const pt_br = {
     },
     video: {
       resolution: 'Resolução',
+      fps: 'Taxa de quadros',
       customResolution: 'Personalizada',
       device: 'Dispositivo',
       custom: {

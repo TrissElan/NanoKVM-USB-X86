@@ -26,6 +26,7 @@ const ja = {
     },
     video: {
       resolution: '解像度',
+      fps: 'フレームレート',
       scale: '拡大縮小',
       customResolution: 'カスタム',
       device: 'デバイス',

@@ -11,6 +11,7 @@ export const resolutionAtom = atom<Resolution>({
 })
 
 export const videoScaleAtom = atom<number>(1.0)
+export const videoFpsAtom = atom<number>(60)
 
 export const videoDeviceIdAtom = atom('')
 export const videoStateAtom = atom<VideoState>('disconnected')

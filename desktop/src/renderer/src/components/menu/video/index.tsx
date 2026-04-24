@@ -3,6 +3,7 @@ import { Popover } from 'antd'
 import { MonitorIcon } from 'lucide-react'
 
 import { Device } from './device'
+import { Fps } from './fps'
 import { Resolution } from './resolution'
 import { Scale } from './scale'
 
@@ -10,6 +11,7 @@ export const Video = (): ReactElement => {
   const content = (
     <div className="flex flex-col space-y-1">
       <Resolution />
+      <Fps />
       <Scale />
       <Device />
     </div>

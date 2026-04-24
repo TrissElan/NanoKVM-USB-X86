@@ -26,6 +26,7 @@ const de = {
     },
     video: {
       resolution: 'Auflösung',
+      fps: 'Bildrate',
       scale: 'Skalierung',
       customResolution: 'Benutzerdefiniert',
       device: 'Gerät',

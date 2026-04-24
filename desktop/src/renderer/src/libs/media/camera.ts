@@ -4,6 +4,7 @@ class Camera {
   id: string = ''
   width: number = 1920
   height: number = 1080
+  fps: number = 60
   audioId: string = ''
   stream: MediaStream | null = null
 
@@ -18,7 +19,7 @@ class Camera {
       deviceId: { exact: id },
       width: { ideal: width },
       height: { ideal: height },
-      frameRate: { ideal: 60 },
+      frameRate: { ideal: this.fps },
       latency: { ideal: 0 },
       resizeMode: 'none'
     }
@@ -50,6 +51,15 @@ class Camera {
 
   public async updateResolution(width: number, height: number): Promise<void> {
     return this.open(this.id, width, height, this.audioId)
+  }
+
+  public setFps(fps: number): void {
+    this.fps = fps
+  }
+
+  public async updateFps(fps: number): Promise<void> {
+    this.fps = fps
+    return this.open(this.id, this.width, this.height, this.audioId)
   }
 
   public close(): void {

@@ -22,6 +22,7 @@ const zh_tw = {
     },
     video: {
       resolution: '解析度',
+      fps: '幀率',
       customResolution: '自訂',
       device: '裝置',
       custom: {

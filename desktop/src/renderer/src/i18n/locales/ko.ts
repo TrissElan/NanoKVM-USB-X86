@@ -18,6 +18,7 @@ const ko = {
     },
     video: {
       resolution: '해상도',
+      fps: '프레임 속도',
       scale: '배율',
       customResolution: '사용자 정의',
       device: '장치',

@@ -26,6 +26,7 @@ const en = {
     },
     video: {
       resolution: 'Resolution',
+      fps: 'Frame Rate',
       scale: 'Scale',
       customResolution: 'Custom',
       device: 'Device',
