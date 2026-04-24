@@ -1,4 +1,4 @@
-# NanoKVM-USB
+# NanoKVM-USB X86
 
 <div align="center">
 
@@ -6,7 +6,21 @@
 
 </div>
 
-> Finger-sized 4K USB KVM for Server/SBCs
+> Win32 fork of the finger-sized 4K USB KVM by [Sipeed](https://github.com/sipeed/NanoKVM-USB)
+
+## About This Fork
+
+This is the **X86 (Windows ia32)** fork of NanoKVM-USB. It restructures the upstream monorepo into a standalone Electron desktop app, removes the browser version, and adds Windows-specific features.
+
+### Key Changes from Upstream
+
+- **Win32 ia32 build target** — NSIS installer for 32-bit Windows
+- **FPS selection** — Choose 15/30/45/60 fps from the video menu
+- **Auto-updater disabled** — Distributes via direct download, not in-app updates
+- **npm instead of pnpm** — Simplified dependency management
+- **Electron 37** — Ahead of upstream's Electron 35
+- **Browser version removed** — Not needed for the X86 desktop use case
+- **Source restructured** — `desktop/` flattened to root `src/`
 
 ## Introduction
 
@@ -41,31 +55,71 @@ NanoKVM-USB captures HDMI video signals and transmits them to the host via USB 3
 
 > **Note:** For the best experience, please use a USB 3.0 cable to connect the device.
 
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm (not pnpm)
+- Windows (for building the installer)
+
+### Development
+
+```shell
+npm install
+npm run dev
+```
+
+### Build
+
+```shell
+npm run build        # Typecheck + compile
+npm run build:win    # Build Win32 ia32 NSIS installer
+```
+
+### Quality
+
+```shell
+npm run lint         # ESLint
+npm run format       # Prettier
+npm run typecheck    # TypeScript check
+```
+
+## Project Structure
+
+```
+├── src/
+│   ├── main/        # Electron main process, device protocol, IPC handlers
+│   ├── preload/     # Context bridge (electronAPI exposure)
+│   ├── renderer/    # React UI (video, keyboard, mouse capture)
+│   └── common/      # Shared IPC event enum
+├── desktop/         # ⚠️ REFERENCE COPY of upstream (do NOT edit)
+├── build/           # App icons for electron-builder
+└── resources/       # Additional assets
+```
+
+## X86-Specific Features
+
+### FPS Selection
+
+The video menu includes an FPS selector with four options: 15, 30, 45, and 60 fps. The selection persists across sessions via localStorage and takes effect when the camera stream opens or reopens.
+
+### Auto-Updater Disabled
+
+The auto-updater has been replaced with a stub. The Settings page displays "Auto-update is disabled for the X86 fork" instead of update controls. This is intentional: the fork distributes via direct download rather than in-app updates.
+
 ## Resources
 
-We offer two versions of the application: [Browser](https://github.com/sipeed/NanoKVM-USB/tree/main/browser) and [Desktop](https://github.com/sipeed/NanoKVM-USB/tree/main/desktop). Both are available on the [Releases page](https://github.com/sipeed/NanoKVM-USB/releases).
+- **Upstream project:** [sipeed/NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB)
+- **Upstream browser version:** [usbkvm.sipeed.com](https://usbkvm.sipeed.com)
+- **Upstream releases:** [Releases page](https://github.com/sipeed/NanoKVM-USB/releases)
 
-### Browser Version
-
-Access our online service at [usbkvm.sipeed.com](https://usbkvm.sipeed.com).
-
-For self-deployment, download the `NanoKVM-USB-xxx-browser.zip` and serve it. Refer to the [Deployment Guide](https://wiki.sipeed.com/hardware/en/kvm/NanoKVM_USB/development.html) for details. If you are using Docker, simply run `docker-compose up -d`.
-
-
-> Please use the desktop Chrome browser.
-
-### Desktop Version
-
-Download the appropriate package for your operating system and install it.
-
-> For Linux users, a permission error may occur when connecting to the serial port.  
-> To resolve this run the commands below matching your system, then log out and log back in or restart your system.
-> #### Debian
-> `sudo usermod -a -G dialout $USER`
-> #### Arch
-> `sudo usermod -a -G uucp $USER`
 ## Where to Buy
 
 * [AliExpress Store]() (To be released)
 * [Taobao Store]() (To be released)
 * [Pre-sale Page](https://sipeed.com/nanokvm/usb)
+
+## Credits
+
+Based on [NanoKVM-USB](https://github.com/sipeed/NanoKVM-USB) by [Sipeed](https://www.sipeed.com).
