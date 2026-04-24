@@ -1,4 +1,4 @@
-# NanoKVM-USB X86
+# NanoKVM-USB-X86
 
 <div align="center">
 
