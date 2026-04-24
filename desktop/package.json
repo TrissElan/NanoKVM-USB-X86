@@ -16,6 +16,7 @@
     "build": "npm run typecheck && electron-vite build",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
+    "build:win-ia32": "npm run build && electron-builder --win --ia32",
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux",
     "build:win-full": "npm run build && electron-builder --win --x64 --arm64",
