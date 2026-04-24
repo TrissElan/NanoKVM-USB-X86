@@ -1,5 +1,5 @@
 appId: com.sipeed.usbkvm.x86
-productName: NanoKVM-USB X86
+productName: NanoKVM-USB-X86
 
 directories:
   buildResources: build
@@ -16,7 +16,7 @@ asarUnpack:
   - resources/**
 
 win:
-  executableName: NanoKVM-USB X86
+  executableName: NanoKVM-USB-X86
   target:
     - target: nsis
       arch:
