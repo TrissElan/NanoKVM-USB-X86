@@ -8,3 +8,27 @@
 *.njsproj
 *.sln
 *.sw?
+
+# Sisyphus work files
+.sisyphus/
+
+# AGENTS.md files (AI knowledge base)
+AGENTS.md
+src/main/AGENTS.md
+src/renderer/AGENTS.md
+
+# Build output
+dist/
+out/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example

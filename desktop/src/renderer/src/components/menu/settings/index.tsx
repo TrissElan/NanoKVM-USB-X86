@@ -3,7 +3,6 @@ import { Modal } from 'antd'
 import clsx from 'clsx'
 import {
   BadgeInfoIcon,
-  CircleArrowUpIcon,
   PaletteIcon,
   RotateCcwIcon,
   SettingsIcon
@@ -13,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 import { About } from './about'
 import { Appearance } from './appearance'
 import { Reset } from './reset'
-import { Update } from './update'
 
 export const Settings = (): ReactElement => {
   const { t } = useTranslation()
@@ -23,7 +21,6 @@ export const Settings = (): ReactElement => {
 
   const tabs = [
     { id: 'appearance', icon: <PaletteIcon size={16} />, component: <Appearance /> },
-    { id: 'update', icon: <CircleArrowUpIcon size={16} />, component: <Update /> },
     { id: 'reset', icon: <RotateCcwIcon size={16} />, component: <Reset /> },
     { id: 'about', icon: <BadgeInfoIcon size={16} />, component: <About /> }
   ]

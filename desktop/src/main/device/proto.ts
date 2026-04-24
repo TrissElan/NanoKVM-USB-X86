@@ -1,17 +1,8 @@
 export enum CmdEvent {
   GET_INFO = 0x01,
   SEND_KB_GENERAL_DATA = 0x02,
-  SEND_KB_MEDIA_DATA = 0x03,
   SEND_MS_ABS_DATA = 0x04,
-  SEND_MS_REL_DATA = 0x05,
-  SEND_MY_HID_DATA = 0x06,
-  READ_MY_HID_DATA = 0x87,
-  GET_PARA_CFG = 0x08,
-  SET_PARA_CFG = 0x09,
-  GET_USB_STRING = 0x0a,
-  SET_USB_STRING = 0x0b,
-  SET_DEFAULT_CFG = 0x0c,
-  RESET = 0x0f
+  SEND_MS_REL_DATA = 0x05
 }
 
 export class CmdPacket {
@@ -39,12 +30,10 @@ export class CmdPacket {
   public decode(data: number[]): number {
     const headerIndex = this.findHead(data)
     if (headerIndex < 0) {
-      console.log('cannot find HEAD')
       return -1
     }
 
     if (data.length - headerIndex < 6) {
-      console.log('len error1')
       return -1
     }
 
@@ -53,7 +42,6 @@ export class CmdPacket {
     const dataLen = data[headerIndex + 4]
 
     if (data.length < headerIndex + 3 + dataLen + 1) {
-      console.log('len error2')
       return -1
     }
 
@@ -61,7 +49,6 @@ export class CmdPacket {
     try {
       sum = data[headerIndex + 5 + dataLen]
     } catch {
-      console.log('len error3')
       return -1
     }
 
@@ -71,7 +58,6 @@ export class CmdPacket {
     }
 
     if ((s & 0xff) !== sum) {
-      // console.log(`sum error, sum${sum}, s${s & 0xff}`);
       return -1
     }
 

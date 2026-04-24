@@ -42,7 +42,7 @@ export const About = (): ReactElement => {
   }, [])
 
   function open(url: string): void {
-    window.electron.ipcRenderer.send(IpcEvents.OPEN_EXTERNAL_RUL, url)
+    window.electron.ipcRenderer.send(IpcEvents.OPEN_EXTERNAL_URL, url)
   }
 
   return (
@@ -55,7 +55,7 @@ export const About = (): ReactElement => {
         <img src={icon} className="pointer-events-none h-[64px] w-[64px]" alt="maix" />
 
         <div className="flex flex-col space-y-1">
-          <span className="text-settings-active-foreground text-sm font-bold">NanoKVM-USB</span>
+          <span className="text-settings-active-foreground text-sm font-bold">NanoKVM-USB-X86</span>
           <span className="text-settings-foreground text-sm">{version}</span>
         </div>
       </div>

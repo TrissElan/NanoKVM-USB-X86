@@ -39,8 +39,11 @@ export async function requestCameraPermission(resolution?: Resolution): Promise<
     })
     stream.getTracks().forEach((track) => track.stop())
     return true
-  } catch (err: any) {
-    return !(err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return !(err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')
+    }
+    return true
   }
 }
 
@@ -69,7 +72,10 @@ export async function requestMicrophonePermission(): Promise<boolean> {
     })
     stream.getTracks().forEach((track) => track.stop())
     return true
-  } catch (err: any) {
-    return !(err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return !(err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')
+    }
+    return true
   }
 }

@@ -4,7 +4,6 @@ import { KeyboardIcon } from 'lucide-react'
 
 import { Paste } from './paste'
 import { Shortcuts } from './shortcuts'
-import { VirtualKeyboard } from './virtual-keyboard'
 
 export const Keyboard = (): ReactElement => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -12,7 +11,6 @@ export const Keyboard = (): ReactElement => {
   const content = (
     <div className="flex flex-col space-y-1">
       <Paste />
-      <VirtualKeyboard />
       <Shortcuts />
     </div>
   )

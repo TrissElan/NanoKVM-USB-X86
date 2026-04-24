@@ -13,6 +13,10 @@ const en = {
       selectSerial: 'Please select serial device',
       selectBaudRate: 'Please select baud rate'
     },
+    reconnect: {
+      reconnecting: 'Reconnecting...',
+      attempt: 'Attempt'
+    },
     menu: {
       serial: 'Serial',
       keyboard: 'Keyboard',
@@ -24,9 +28,23 @@ const en = {
         clickToSelect: 'Click to select serial port'
       }
     },
+    connectionStatus: {
+      video: {
+        disconnected: 'Video: Disconnected',
+        connecting: 'Video: Connecting...',
+        connected: 'Video: Connected'
+      },
+      serial: {
+        notSupported: 'Serial: Not Supported',
+        disconnected: 'Serial: Disconnected',
+        connecting: 'Serial: Connecting...',
+        connected: 'Serial: Connected'
+      }
+    },
     video: {
       resolution: 'Resolution',
       fps: 'Frame Rate',
+      fpsChanged: 'Frame rate changed to {{fps}} FPS',
       scale: 'Scale',
       customResolution: 'Custom',
       device: 'Device',
@@ -79,6 +97,12 @@ const en = {
         enable: 'Enable',
         disable: 'Disable'
       }
+    },
+    shortcut: {
+      keyboardEnabled: 'Keyboard capture: ON',
+      keyboardDisabled: 'Keyboard capture: OFF',
+      mouseEnabled: 'Mouse capture: ON',
+      mouseDisabled: 'Mouse capture: OFF'
     },
     settings: {
       title: 'Settings',

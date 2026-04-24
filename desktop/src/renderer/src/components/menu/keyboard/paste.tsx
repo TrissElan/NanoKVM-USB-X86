@@ -34,7 +34,7 @@ export const Paste = (): ReactElement => {
         await send(0, 0)
       }
     } catch (e) {
-      console.log(e)
+      console.error(e)
     } finally {
       setIsLoading(false)
     }

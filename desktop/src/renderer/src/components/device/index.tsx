@@ -1,7 +1,7 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement } from 'react'
 import { useAtomValue } from 'jotai'
 
-import { serialPortStateAtom, videoStateAtom } from '@renderer/jotai/device'
+import { reconnectAttemptAtom, serialPortStateAtom, videoStateAtom } from '@renderer/jotai/device'
 
 import { Connect } from './connect'
 import { Disconnect } from './disconnect'
@@ -9,12 +9,14 @@ import { Disconnect } from './disconnect'
 export const Device = (): ReactElement => {
   const videoState = useAtomValue(videoStateAtom)
   const serialPortState = useAtomValue(serialPortStateAtom)
+  const reconnectAttempt = useAtomValue(reconnectAttemptAtom)
 
-  const [isConnected, setIsConnected] = useState(false)
+  const isConnected = videoState === 'connected' && serialPortState === 'connected'
+  const isReconnecting = reconnectAttempt > 0
 
-  useEffect(() => {
-    setIsConnected(videoState === 'connected' && serialPortState === 'connected')
-  }, [videoState, serialPortState])
+  if (isReconnecting) {
+    return <Disconnect />
+  }
 
-  return <>{isConnected ? <Disconnect /> : <Connect />}</>
+  return isConnected ? <Disconnect /> : <Connect />
 }

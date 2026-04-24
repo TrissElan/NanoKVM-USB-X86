@@ -1,5 +1,5 @@
-import { ReactElement, useEffect } from 'react'
-import { Popover } from 'antd'
+import { ReactElement, useCallback, useEffect } from 'react'
+import { Popover, message } from 'antd'
 import clsx from 'clsx'
 import { useAtom } from 'jotai'
 import { GaugeIcon } from 'lucide-react'
@@ -16,6 +16,13 @@ const FpsList = [
   { label: '60', value: 60 }
 ]
 
+const FpsShortcutMap: Record<string, number> = {
+  F1: 15,
+  F2: 30,
+  F3: 45,
+  F4: 60
+}
+
 export const Fps = (): ReactElement => {
   const { t } = useTranslation()
 
@@ -29,23 +36,42 @@ export const Fps = (): ReactElement => {
     }
   }, [setVideoFps])
 
-  async function updateFps(fps: number): Promise<void> {
-    setVideoFps(fps)
-    storage.setVideoFps(fps)
+  const updateFps = useCallback(
+    async (fps: number): Promise<void> => {
+      setVideoFps(fps)
+      storage.setVideoFps(fps)
 
-    if (camera.isOpen()) {
-      try {
-        await camera.updateFps(fps)
+      if (camera.isOpen()) {
+        try {
+          await camera.updateFps(fps)
 
-        const video = document.getElementById('video') as HTMLVideoElement
-        if (video) {
-          video.srcObject = camera.getStream()
+          const video = document.getElementById('video') as HTMLVideoElement
+          if (video) {
+            video.srcObject = camera.getStream()
+          }
+        } catch (err) {
+          console.error(err)
         }
-      } catch (err) {
-        console.log(err)
       }
+    },
+    [setVideoFps]
+  )
+
+  useEffect(() => {
+    function handleFpsShortcut(event: KeyboardEvent): void {
+      const fps = FpsShortcutMap[event.code]
+      if (!fps) return
+
+      event.preventDefault()
+      event.stopImmediatePropagation()
+
+      updateFps(fps)
+      message.success(t('video.fpsChanged', { fps }), 1.5)
     }
-  }
+
+    document.addEventListener('keydown', handleFpsShortcut, true)
+    return () => document.removeEventListener('keydown', handleFpsShortcut, true)
+  }, [updateFps, t])
 
   const content = (
     <>

@@ -63,18 +63,20 @@ async function closeSerialPort(): Promise<boolean> {
   }
 }
 
-async function sendKeyboard(_: IpcMainInvokeEvent, report: number[]): Promise<void> {
+async function sendKeyboard(_: IpcMainInvokeEvent, report: number[]): Promise<boolean> {
   try {
-    await device.sendKeyboardData(report)
+    return await device.sendKeyboardData(report)
   } catch (error) {
     console.error('Error sending keyboard data:', error)
+    return false
   }
 }
 
-async function sendMouse(_: IpcMainInvokeEvent, report: number[]): Promise<void> {
+async function sendMouse(_: IpcMainInvokeEvent, report: number[]): Promise<boolean> {
   try {
-    await device.sendMouseData(report)
+    return await device.sendMouseData(report)
   } catch (error) {
     console.error('Error sending mouse data:', error)
+    return false
   }
 }

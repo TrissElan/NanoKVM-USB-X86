@@ -36,8 +36,8 @@ export const Audio = () => {
       setIsGranted(granted)
 
       camera.close()
-    } catch (err: any) {
-      console.log('failed to request media permissions: ', err)
+    } catch (err: unknown) {
+      console.error('failed to request media permissions: ', err)
     }
   }
 

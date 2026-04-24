@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 import { resolutionAtom, videoDeviceIdAtom } from '@renderer/jotai/device'
 import { camera } from '@renderer/libs/media/camera'
+import { enumerateMediaDevices } from '@renderer/libs/media/devices'
 import * as storage from '@renderer/libs/storage'
 import type { MediaDevice } from '@renderer/types'
 
@@ -26,32 +27,11 @@ export const Device = (): ReactElement => {
     try {
       await navigator.mediaDevices.getUserMedia({ video: true })
 
-      const allDevices = await navigator.mediaDevices.enumerateDevices()
-      const videoDevices = allDevices.filter((device) => device.kind === 'videoinput')
-      const audioDevices = allDevices.filter((device) => device.kind === 'audioinput')
-
-      const mediaDevices = videoDevices.map((videoDevice) => {
-        const device: MediaDevice = {
-          videoId: videoDevice.deviceId,
-          videoName: videoDevice.label
-        }
-
-        if (videoDevice.groupId) {
-          const matchedAudioDevice = audioDevices.find(
-            (audioDevice) => audioDevice.groupId === videoDevice.groupId
-          )
-          if (matchedAudioDevice) {
-            device.audioId = matchedAudioDevice.deviceId
-            device.audioName = matchedAudioDevice.label
-          }
-        }
-
-        return device
-      })
+      const mediaDevices = await enumerateMediaDevices()
 
       setDevices(mediaDevices)
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 

@@ -6,21 +6,24 @@
 
 </div>
 
-> Win32 fork of the finger-sized 4K USB KVM by [Sipeed](https://github.com/sipeed/NanoKVM-USB)
+> X86 fork of the finger-sized 4K USB KVM by [Sipeed](https://github.com/sipeed/NanoKVM-USB)
 
 ## About This Fork
 
-This is the **X86 (Windows ia32)** fork of NanoKVM-USB. It restructures the upstream monorepo into a standalone Electron desktop app, removes the browser version, and adds Windows-specific features.
+This is the **X86 (Windows ia32)** fork of NanoKVM-USB. It is based on the upstream desktop version, removes the browser version, and adds Windows-specific optimizations.
 
 ### Key Changes from Upstream
 
 - **Win32 ia32 build target** — NSIS installer for 32-bit Windows
-- **FPS selection** — Choose 15/30/45/60 fps from the video menu
+- **FPS selection** — Choose 15/30/45/60 fps from the video menu (keyboard shortcuts F1-F4)
 - **Auto-updater disabled** — Distributes via direct download, not in-app updates
 - **npm instead of pnpm** — Simplified dependency management
-- **Electron 37** — Ahead of upstream's Electron 35
 - **Browser version removed** — Not needed for the X86 desktop use case
-- **Source restructured** — `desktop/` flattened to root `src/`
+- **English only** — Removed all non-English translations
+- **Connection status** — Video and serial port status indicators in menu bar
+- **Auto-reconnect** — Exponential backoff retry on serial port disconnect
+- **Quick toggle** — Ctrl+Shift+K (keyboard), Ctrl+Shift+M (mouse)
+- **Fullscreen toggle** — F11 or menu button
 
 ## Introduction
 
@@ -66,6 +69,7 @@ NanoKVM-USB captures HDMI video signals and transmits them to the host via USB 3
 ### Development
 
 ```shell
+cd desktop
 npm install
 npm run dev
 ```
@@ -73,6 +77,7 @@ npm run dev
 ### Build
 
 ```shell
+cd desktop
 npm run build        # Typecheck + compile
 npm run build:win    # Build Win32 ia32 NSIS installer
 ```
@@ -80,6 +85,7 @@ npm run build:win    # Build Win32 ia32 NSIS installer
 ### Quality
 
 ```shell
+cd desktop
 npm run lint         # ESLint
 npm run format       # Prettier
 npm run typecheck    # TypeScript check
@@ -88,25 +94,56 @@ npm run typecheck    # TypeScript check
 ## Project Structure
 
 ```
-├── src/
-│   ├── main/        # Electron main process, device protocol, IPC handlers
-│   ├── preload/     # Context bridge (electronAPI exposure)
-│   ├── renderer/    # React UI (video, keyboard, mouse capture)
-│   └── common/      # Shared IPC event enum
-├── desktop/         # ⚠️ REFERENCE COPY of upstream (do NOT edit)
-├── build/           # App icons for electron-builder
-└── resources/       # Additional assets
+├── src/               # Fork's active source code (NOT used - see desktop/)
+├── desktop/           # Upstream desktop source (active codebase)
+│   ├── src/
+│   │   ├── main/      # Electron main process, device protocol, IPC
+│   │   ├── preload/   # Context bridge
+│   │   ├── renderer/  # React UI
+│   │   └── common/    # Shared IPC events
+│   └── build/         # App icons
+└── resources/         # Additional assets
 ```
 
 ## X86-Specific Features
 
 ### FPS Selection
 
-The video menu includes an FPS selector with four options: 15, 30, 45, and 60 fps. The selection persists across sessions via localStorage and takes effect when the camera stream opens or reopens.
+The video menu includes an FPS selector with four options: 15, 30, 45, and 60 fps. Keyboard shortcuts F1-F4 provide quick switching. The selection persists across sessions via localStorage.
 
-### Auto-Updater Disabled
+### Connection Status
 
-The auto-updater has been replaced with a stub. The Settings page displays "Auto-update is disabled for the X86 fork" instead of update controls. This is intentional: the fork distributes via direct download rather than in-app updates.
+The menu bar displays real-time connection status for both video and serial port connections. Green indicates connected, yellow indicates connecting, red indicates disconnected.
+
+### Auto-Reconnect
+
+When the serial port disconnects, the application automatically attempts to reconnect with exponential backoff (1s, 2s, 4s, 8s) up to 5 retries.
+
+### Quick Toggle
+
+- **Ctrl+Shift+K** — Toggle keyboard capture on/off
+- **Ctrl+Shift+M** — Toggle mouse capture on/off
+
+### Fullscreen Toggle
+
+Click the maximize/minimize icon in the menu bar or use F11 to toggle fullscreen mode.
+
+### Mouse Modes
+
+- **Absolute mode** — Click-to-point positioning (default)
+- **Relative mode** — Pointer-lock based movement
+- Touch gesture support for touchscreen devices in absolute mode
+
+## Removed Features
+
+The following upstream features have been removed in the X86 fork:
+
+- **Browser version** — Not needed for desktop KVM use
+- **Recorder** — Screen recording functionality removed
+- **Mouse jiggler** — Anti-sleep feature removed
+- **Virtual keyboard** — On-screen keyboard removed
+- **Auto-updater** — In-app updates disabled
+- **Non-English translations** — English only
 
 ## Resources
 

@@ -69,7 +69,7 @@ export const Resolution = (): ReactElement => {
     try {
       await camera.updateResolution(w, h)
     } catch (err) {
-      console.log(err)
+      console.error(err)
       return
     }
 
@@ -82,18 +82,19 @@ export const Resolution = (): ReactElement => {
     setIsOpen(false)
   }
 
-  function removeCustomResolution(e: React.MouseEvent<HTMLSpanElement, MouseEvent>): void {
+  function removeCustomResolution(
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+    w: number,
+    h: number
+  ): void {
     e.stopPropagation()
 
-    const isExist = customResolutions.some(
-      (r) => r.width === resolution.width && r.height === resolution.height
-    )
-    if (isExist) {
+    if (resolution.width === w && resolution.height === h) {
       updateResolution(1920, 1080)
     }
 
-    setCustomResolutions([])
-    storage.removeCustomResolutions()
+    setCustomResolutions(customResolutions.filter((r) => r.width !== w || r.height !== h))
+    storage.removeCustomResolution(w, h)
   }
 
   const content = (
@@ -118,31 +119,34 @@ export const Resolution = (): ReactElement => {
       <Divider style={{ margin: '5px 0 5px 0' }} />
 
       <div
-        className="flex cursor-pointer items-center justify-between space-x-3 rounded px-3 py-1.5 text-sm select-none hover:bg-neutral-700/60"
+        className="flex cursor-pointer items-center rounded px-3 py-1.5 text-sm select-none hover:bg-neutral-700/60"
         onClick={showModal}
       >
         <span>{t('video.customResolution')}</span>
-        {customResolutions.length > 0 && (
-          <span className="hover:text-red-500" onClick={removeCustomResolution}>
-            <Trash2Icon size={16} />
-          </span>
-        )}
       </div>
 
       {customResolutions.map((res) => (
         <div
-          key={res.width}
+          key={`${res.width}x${res.height}`}
           className={clsx(
-            'flex cursor-pointer items-center space-x-1 rounded px-3 py-1.5 select-none hover:bg-neutral-700/60',
+            'flex cursor-pointer items-center justify-between rounded px-3 py-1.5 select-none hover:bg-neutral-700/60',
             resolution.width === res.width && resolution.height === res.height
               ? 'text-blue-500'
               : 'text-white'
           )}
           onClick={() => updateResolution(res.width, res.height)}
         >
-          <span className="flex w-[32px]">{res.width}</span>
-          <span>x</span>
-          <span className="w-[32px]">{res.height}</span>
+          <span className="flex items-center space-x-1">
+            <span className="w-[32px]">{res.width}</span>
+            <span>x</span>
+            <span className="w-[32px]">{res.height}</span>
+          </span>
+          <span
+            className="hover:text-red-500"
+            onClick={(e) => removeCustomResolution(e, res.width, res.height)}
+          >
+            <Trash2Icon size={14} />
+          </span>
         </div>
       ))}
     </>

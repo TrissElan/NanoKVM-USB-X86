@@ -3,14 +3,14 @@ import { Result, Spin } from 'antd'
 import clsx from 'clsx'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
-import { useMediaQuery } from 'react-responsive'
 
 import { IpcEvents } from '@common/ipc-events'
 import { Device } from '@renderer/components/device'
+import { GlobalShortcuts } from '@renderer/components/global-shortcuts'
 import { Keyboard } from '@renderer/components/keyboard'
 import { Menu } from '@renderer/components/menu'
 import { Mouse } from '@renderer/components/mouse'
-import { VirtualKeyboard } from '@renderer/components/virtual-keyboard'
+
 import {
   resolutionAtom,
   serialPortStateAtom,
@@ -18,7 +18,7 @@ import {
   videoStateAtom
 } from '@renderer/jotai/device'
 import { isKeyboardEnableAtom } from '@renderer/jotai/keyboard'
-import { mouseModeAtom, mouseStyleAtom } from '@renderer/jotai/mouse'
+import { isMouseEnableAtom, mouseModeAtom, mouseStyleAtom } from '@renderer/jotai/mouse'
 import { camera } from '@renderer/libs/media/camera'
 import { requestCameraPermission } from '@renderer/libs/media/permission'
 import { getVideoResolution } from '@renderer/libs/storage'
@@ -28,7 +28,6 @@ type State = 'loading' | 'success' | 'failed'
 
 const App = (): ReactElement => {
   const { t } = useTranslation()
-  const isBigScreen = useMediaQuery({ minWidth: 850 })
 
   const videoScale = useAtomValue(videoScaleAtom)
   const videoState = useAtomValue(videoStateAtom)
@@ -36,6 +35,7 @@ const App = (): ReactElement => {
   const mouseMode = useAtomValue(mouseModeAtom)
   const mouseStyle = useAtomValue(mouseStyleAtom)
   const isKeyboardEnable = useAtomValue(isKeyboardEnableAtom)
+  const isMouseEnable = useAtomValue(isMouseEnableAtom)
   const setResolution = useSetAtom(resolutionAtom)
 
   const [state, setState] = useState<State>('loading')
@@ -88,11 +88,12 @@ const App = (): ReactElement => {
   return (
     <>
       <Device />
+      <GlobalShortcuts />
 
       {videoState === 'connected' && serialPortState === 'connected' && (
         <>
           <Menu />
-          <Mouse />
+          {isMouseEnable && <Mouse />}
           {isKeyboardEnable && <Keyboard />}
         </>
       )}
@@ -109,8 +110,7 @@ const App = (): ReactElement => {
         playsInline
       />
 
-      <VirtualKeyboard isBigScreen={isBigScreen} />
-    </>
+      </>
   )
 }
 

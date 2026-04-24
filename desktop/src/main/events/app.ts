@@ -6,7 +6,7 @@ import { IpcEvents } from '../../common/ipc-events'
 export function registerApp(): void {
   ipcMain.handle(IpcEvents.GET_APP_VERSION, getAppVersion)
   ipcMain.handle(IpcEvents.GET_PLATFORM, getPlatform)
-  ipcMain.on(IpcEvents.OPEN_EXTERNAL_RUL, openExternalUrl)
+  ipcMain.on(IpcEvents.OPEN_EXTERNAL_URL, openExternalUrl)
   ipcMain.handle(IpcEvents.CHECK_MEDIA_PERMISSION, checkMediaPermission)
   ipcMain.handle(IpcEvents.REQUEST_MEDIA_PERMISSION, requestMediaPermission)
   ipcMain.on(IpcEvents.SET_FULL_SCREEN, setFullScreen)

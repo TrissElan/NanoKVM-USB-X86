@@ -1,7 +1,5 @@
 import type { Resolution } from '@renderer/types'
 
-import { getWithExpiry, setWithExpiry } from './expiry'
-
 const LANGUAGE_KEY = 'nanokvm-usb-language'
 const VIDEO_DEVICE_ID_KEY = 'nanokvm-usb-video-device-id'
 const VIDEO_RESOLUTION_KEY = 'nanokvm-usb-video-resolution'
@@ -12,7 +10,6 @@ const IS_MENU_OPEN_KEY = 'nanokvm-is-menu-open'
 const MOUSE_STYLE_KEY = 'nanokvm-usb-mouse-style'
 const MOUSE_MODE_KEY = 'nanokvm-usb-mouse-mode'
 const MOUSE_SCROLL_DIRECTION_KEY = 'nanokvm-usb-mouse-scroll-direction'
-const SKIP_UPDATE_KEY = 'nano-kvm-check-update'
 const MOUSE_SCROLL_INTERVAL_KEY = 'nanokvm-usb-mouse-scroll-interval'
 const VIDEO_FPS_KEY = 'nanokvm-usb-video-fps'
 const BAUD_RATE_KEY = 'nanokvm-usb-baud-rate'
@@ -40,7 +37,11 @@ export function getVideoResolution(): Resolution | undefined {
   if (!resolution) {
     return
   }
-  return window.JSON.parse(resolution) as Resolution
+  try {
+    return window.JSON.parse(resolution) as Resolution
+  } catch {
+    return
+  }
 }
 
 export function setVideoResolution(width: number, height: number): void {
@@ -50,7 +51,11 @@ export function setVideoResolution(width: number, height: number): void {
 export function getCustomResolutions(): Resolution[] | undefined {
   const resolution = localStorage.getItem(CUSTOM_RESOLUTION_KEY)
   if (!resolution) return
-  return window.JSON.parse(resolution) as Resolution[]
+  try {
+    return window.JSON.parse(resolution) as Resolution[]
+  } catch {
+    return
+  }
 }
 
 export function setCustomResolution(width: number, height: number): void {
@@ -62,6 +67,18 @@ export function setCustomResolution(width: number, height: number): void {
 
   const data = resolutions ? [...resolutions, { width, height }] : [{ width, height }]
   localStorage.setItem(CUSTOM_RESOLUTION_KEY, window.JSON.stringify(data))
+}
+
+export function removeCustomResolution(width: number, height: number): void {
+  const resolutions = getCustomResolutions()
+  if (!resolutions) return
+
+  const filtered = resolutions.filter((r) => r.width !== width || r.height !== height)
+  if (filtered.length === 0) {
+    localStorage.removeItem(CUSTOM_RESOLUTION_KEY)
+  } else {
+    localStorage.setItem(CUSTOM_RESOLUTION_KEY, window.JSON.stringify(filtered))
+  }
 }
 
 export function removeCustomResolutions(): void {
@@ -164,16 +181,6 @@ export function setMouseScrollInterval(interval: number): void {
   localStorage.setItem(MOUSE_SCROLL_INTERVAL_KEY, String(interval))
 }
 
-export function getSkipUpdate(): boolean {
-  const skip = getWithExpiry(SKIP_UPDATE_KEY)
-  return skip ? Boolean(skip) : false
-}
-
-export function setSkipUpdate(skip: boolean): void {
-  const expiry = 3 * 24 * 60 * 60 * 1000
-  setWithExpiry(SKIP_UPDATE_KEY, String(skip), expiry)
-}
-
 export function clearAllSettings(): void {
   localStorage.removeItem(LANGUAGE_KEY)
   localStorage.removeItem(VIDEO_DEVICE_ID_KEY)
@@ -184,10 +191,12 @@ export function clearAllSettings(): void {
   localStorage.removeItem(MOUSE_STYLE_KEY)
   localStorage.removeItem(MOUSE_MODE_KEY)
   localStorage.removeItem(MOUSE_SCROLL_DIRECTION_KEY)
-  localStorage.removeItem(SKIP_UPDATE_KEY)
   localStorage.removeItem(MOUSE_SCROLL_INTERVAL_KEY)
   localStorage.removeItem(VIDEO_FPS_KEY)
   localStorage.removeItem(BAUD_RATE_KEY)
+  localStorage.removeItem(VIDEO_SCALE_KEY)
+  localStorage.removeItem(MOUSE_JIGGLER_MODE_KEY)
+  localStorage.removeItem(KEYBOARD_SHORTCUT_KEY)
 }
 
 export function getMouseJigglerMode(): 'enable' | 'disable' {

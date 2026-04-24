@@ -48,7 +48,7 @@ export const Recorder = () => {
     }
 
     try {
-      const handle = await (window as any).showSaveFilePicker({
+      const handle = await window.showSaveFilePicker({
         suggestedName: `recording-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`,
         types: [
           {

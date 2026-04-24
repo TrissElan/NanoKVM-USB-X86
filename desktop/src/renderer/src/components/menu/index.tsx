@@ -7,9 +7,11 @@ import Draggable from 'react-draggable'
 import * as storage from '@renderer/libs/storage'
 
 import { Audio } from './audio'
+import { ConnectionStatus } from './connection-status'
 import { Keyboard } from './keyboard'
 import { Mouse } from './mouse'
-import { Recorder } from './recorder'
+
+import { Fullscreen } from './fullscreen'
 import { SerialPort } from './serial-port'
 import { Settings } from './settings'
 import { Video } from './video'
@@ -81,6 +83,9 @@ export const Menu = (): ReactElement => {
             </strong>
             <Divider type="vertical" />
 
+            <ConnectionStatus />
+            <Divider type="vertical" />
+
             <Video />
             <Audio />
             <SerialPort />
@@ -88,11 +93,11 @@ export const Menu = (): ReactElement => {
 
             <Keyboard />
             <Mouse />
-            <Recorder />
 
             <Divider type="vertical" className="px-0.5" />
 
             <Settings />
+            <Fullscreen />
             <div
               className="flex h-[28px] cursor-pointer items-center justify-center rounded px-2 text-white hover:bg-neutral-700/70"
               onClick={toggleMenu}

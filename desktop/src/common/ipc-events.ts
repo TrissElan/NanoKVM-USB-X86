@@ -1,7 +1,7 @@
 export enum IpcEvents {
   GET_APP_VERSION = 'get-app-version',
   GET_PLATFORM = 'get-platform',
-  OPEN_EXTERNAL_RUL = 'open-external-url',
+  OPEN_EXTERNAL_URL = 'open-external-url',
   CHECK_MEDIA_PERMISSION = 'check-media-permission',
   REQUEST_MEDIA_PERMISSION = 'request-media-permission',
   SET_FULL_SCREEN = 'set-full-screen',

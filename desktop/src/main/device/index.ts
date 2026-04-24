@@ -19,17 +19,17 @@ export class Device {
     return new InfoPacket(rspPacket.DATA)
   }
 
-  async sendKeyboardData(report: number[]): Promise<void> {
+  async sendKeyboardData(report: number[]): Promise<boolean> {
     const cmdData = new CmdPacket(this.addr, CmdEvent.SEND_KB_GENERAL_DATA, report).encode()
-    await this.serialPort.write(cmdData)
+    return await this.serialPort.write(cmdData)
   }
 
-  async sendMouseData(report: number[]): Promise<void> {
-    if (report.length === 0) return
+  async sendMouseData(report: number[]): Promise<boolean> {
+    if (report.length === 0) return false
 
     const cmdEvent = report[0] === 0x01 ? CmdEvent.SEND_MS_REL_DATA : CmdEvent.SEND_MS_ABS_DATA
     const cmdData = new CmdPacket(this.addr, cmdEvent, report).encode()
-    await this.serialPort.write(cmdData)
+    return await this.serialPort.write(cmdData)
   }
 }
 

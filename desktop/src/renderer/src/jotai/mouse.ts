@@ -1,6 +1,9 @@
 // mouse cursor style
 import { atom } from 'jotai'
 
+// mouse capture enable/disable
+export const isMouseEnableAtom = atom(true)
+
 export const mouseStyleAtom = atom('cursor-default')
 
 // mouse mode: absolute or relative

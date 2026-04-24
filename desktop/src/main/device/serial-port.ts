@@ -79,13 +79,14 @@ export class SerialPort {
     )
   }
 
-  async write(data: number[]): Promise<void> {
+  async write(data: number[]): Promise<boolean> {
     if (!this.port?.isOpen) {
-      return
+      return false
     }
 
     const uint8Array = new Uint8Array(data)
     this.port.write(uint8Array)
+    return true
   }
 
   async read(minSize: number, sleep: number = 0): Promise<number[]> {
@@ -128,7 +129,6 @@ export class SerialPort {
               console.error('close-serial-port error', err)
               reject(err)
             } else {
-              console.log('Serial port closed successfully')
               resolve()
             }
           })
@@ -139,8 +139,6 @@ export class SerialPort {
         console.error('close-serial-port error', error)
         throw error
       }
-    } else {
-      console.log('Serial port is already closed or not initialized')
     }
   }
 }
